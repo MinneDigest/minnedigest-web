@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MinneStudio - AI-Powered Content Creation Suite</title>
+    <title>MinneStudio - AI-Powered Newsroom Suite</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ee7752'/%3E%3Cstop offset='50%25' style='stop-color:%23e73c7e'/%3E%3Cstop offset='100%25' style='stop-color:%2323a6d5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='url(%23grad)'/%3E%3Ctext x='50' y='68' font-family='Arial, sans-serif' font-size='50' font-weight='bold' text-anchor='middle' fill='white'%3EM%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -30,7 +32,6 @@
             line-height: 1.6;
         }
 
-        /* Smooth Scrolling */
         html {
             scroll-behavior: smooth;
         }
@@ -49,15 +50,9 @@
         }
 
         @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .hero::before {
@@ -74,15 +69,9 @@
         }
 
         @keyframes floatGradient {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            33% {
-                transform: translate(-20px, -20px) rotate(120deg);
-            }
-            66% {
-                transform: translate(20px, -10px) rotate(240deg);
-            }
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(-20px, -20px) rotate(120deg); }
+            66% { transform: translate(20px, -10px) rotate(240deg); }
         }
 
         .hero::after {
@@ -104,137 +93,6 @@
             padding: 0 40px;
             animation: fadeInUp 1.2s ease-out;
         }
-
-        /* Watch Demo Section */
-.watch-demo {
-    padding: 120px 20px;
-    background: linear-gradient(135deg, #000 0%, #0a0a0a 50%, #000 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.watch-demo::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 30% 40%, rgba(79, 172, 254, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 70% 60%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
-    animation: demoGradientPulse 6s ease-in-out infinite;
-    z-index: 0;
-}
-
-@keyframes demoGradientPulse {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.6; }
-}
-
-.watch-demo .container {
-    position: relative;
-    z-index: 1;
-}
-
-.video-container {
-    position: relative;
-    max-width: 1000px;
-    margin: 60px auto;
-    text-align: center;
-}
-
-.video-wrapper {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
-    height: 0;
-    overflow: hidden;
-    border-radius: 20px;
-    box-shadow: 0 30px 80px rgba(79, 172, 254, 0.3),
-                0 10px 30px rgba(0, 0, 0, 0.5);
-    background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(168, 85, 247, 0.1));
-    border: 2px solid rgba(79, 172, 254, 0.2);
-    transition: all 0.4s ease;
-}
-
-.video-wrapper:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 40px 100px rgba(79, 172, 254, 0.4),
-                0 15px 40px rgba(0, 0, 0, 0.6);
-    border-color: rgba(79, 172, 254, 0.4);
-}
-
-.video-wrapper iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 18px;
-}
-
-.video-glow {
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    right: -20px;
-    bottom: -20px;
-    background: linear-gradient(135deg, rgba(79, 172, 254, 0.2), rgba(168, 85, 247, 0.2));
-    border-radius: 30px;
-    filter: blur(20px);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: -1;
-}
-
-.video-wrapper:hover + .video-glow {
-    opacity: 1;
-}
-
-.demo-features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    margin-top: 80px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.demo-feature {
-    text-align: center;
-    padding: 30px 20px;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(15px);
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: all 0.3s ease;
-}
-
-.demo-feature:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(79, 172, 254, 0.3);
-    box-shadow: 0 15px 30px rgba(79, 172, 254, 0.1);
-}
-
-.demo-feature .feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-    display: block;
-}
-
-.demo-feature h4 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #fff;
-}
-
-.demo-feature p {
-    color: #ccc;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
 
         @keyframes fadeInUp {
             from {
@@ -273,13 +131,34 @@
         }
 
         .hero-tagline {
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-size: clamp(1.3rem, 3vw, 2rem);
             color: rgba(255, 255, 255, 0.95);
             max-width: 900px;
-            margin: 0 auto 3rem;
+            margin: 0 auto 1rem;
             line-height: 1.5;
+            font-weight: 400;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
             font-weight: 300;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .funding-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .cta-button {
@@ -298,7 +177,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
-            margin-right: 30px;
+            margin: 0 15px;
         }
 
         .cta-button::before {
@@ -323,7 +202,6 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
 
-        
         .scroll-indicator {
             position: absolute;
             bottom: 30px;
@@ -331,6 +209,7 @@
             transform: translateX(-50%);
             cursor: pointer;
             animation: bounce 2s infinite;
+            z-index: 3;
         }
 
         @keyframes bounce {
@@ -348,14 +227,14 @@
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
 
-        /* Features Section */
-        .features {
+        /* About Section */
+        .about {
             padding: 120px 20px;
-            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+            background: linear-gradient(180deg, #0a0a0a 0%, #0f0f0f 100%);
             position: relative;
         }
 
-        .features::before {
+        .about::before {
             content: '';
             position: absolute;
             top: 0;
@@ -385,120 +264,321 @@
             text-align: center;
             color: var(--text-secondary);
             font-size: 1.2rem;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
             font-weight: 300;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-            margin-bottom: 80px;
-            max-width: 1000px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.8;
         }
 
-        .feature-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.3rem;
+            line-height: 2;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .about-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .highlight-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .highlight-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .highlight-item i {
+            font-size: 2.5rem;
+            color: var(--accent-purple);
+            margin-bottom: 15px;
+        }
+
+        .highlight-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .highlight-item p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        /* 3D Flow Section */
+        .flow-section {
+            padding: 120px 20px;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a0a1a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #three-canvas {
+            width: 100%;
+            height: 600px;
             border-radius: 20px;
-            padding: 40px 30px;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .flow-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 60px auto 0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .legend-color {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .legend-item h5 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .legend-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Tools Section */
+        .tools {
+            padding: 120px 20px;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+
+        .tools-grid {
+            display: grid;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tool-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(10px);
         }
 
-        .feature-card::before {
+        .tool-card::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
 
-        .feature-card:hover::before {
+        .tool-card:hover::before {
             opacity: 1;
         }
 
-        .feature-card:hover {
+        .tool-card:hover {
             transform: translateY(-10px);
             border-color: rgba(139, 92, 246, 0.3);
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+            box-shadow: 0 30px 60px rgba(139, 92, 246, 0.15);
         }
 
-        .feature-icon {
-            width: 60px;
-            height: 60px;
+        .tool-card:nth-child(even) {
+            direction: rtl;
+        }
+
+        .tool-card:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .tool-icon-large {
+            width: 120px;
+            height: 120px;
             background: var(--primary-gradient);
-            border-radius: 16px;
+            border-radius: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 25px;
-            font-size: 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
         }
 
-        .feature-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            font-weight: 600;
+        .tool-icon-large i {
+            font-size: 60px;
+            color: white;
         }
 
-        .feature-card p {
+        .tool-content h3 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .tool-content p {
             color: var(--text-secondary);
-            line-height: 1.7;
+            font-size: 1.15rem;
+            line-height: 1.9;
+            margin-bottom: 25px;
+        }
+
+        .tool-features {
+            list-style: none;
+            margin-top: 25px;
+        }
+
+        .tool-features li {
+            padding: 12px 0;
+            color: var(--text-secondary);
             font-size: 1rem;
-        }
-
-        /* Visual Demo Section */
-        .demo-section {
-            padding: 120px 20px;
-            background: #0f0f0f;
-            position: relative;
-        }
-
-        .demo-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            display: flex;
             align-items: center;
         }
 
-        .demo-content h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #fff 0%, #ff006e 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .tool-features li i {
+            color: var(--accent-purple);
+            margin-right: 12px;
+            font-size: 1.1rem;
         }
 
-        .demo-content p {
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            line-height: 1.8;
-            margin-bottom: 40px;
-        }
-
-        .demo-visual {
+        .tool-visual {
             position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
 
-        .demo-visual img {
+        .tool-visual-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(255, 0, 110, 0.1));
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-visual-box::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.3), transparent);
+            transform: translate(-50%, -50%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; }
+        }
+
+        /* Demo Section */
+        .watch-demo {
+            padding: 120px 20px;
+            background: linear-gradient(135deg, #000 0%, #0a0a0a 50%, #000 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .watch-demo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(79, 172, 254, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 60%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+            animation: demoGradientPulse 6s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes demoGradientPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .watch-demo .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 60px auto;
+            text-align: center;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 30px 80px rgba(79, 172, 254, 0.3),
+                        0 10px 30px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(168, 85, 247, 0.1));
+            border: 2px solid rgba(79, 172, 254, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .video-wrapper:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 40px 100px rgba(79, 172, 254, 0.4),
+                        0 15px 40px rgba(0, 0, 0, 0.6);
+            border-color: rgba(79, 172, 254, 0.4);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: auto;
-            display: block;
+            height: 100%;
+            border-radius: 18px;
         }
 
         /* Creators Section */
@@ -630,11 +710,28 @@
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
         }
 
+        /* Footer */
+        footer {
+            padding: 40px 20px;
+            background: #000;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
         /* Responsive Design */
-        @media (max-width: 768px) {
-            .demo-container {
+        @media (max-width: 968px) {
+            .tool-card {
                 grid-template-columns: 1fr;
-                gap: 40px;
+                padding: 40px;
+            }
+
+            .tool-card:nth-child(even) {
+                direction: ltr;
             }
 
             .creators-grid {
@@ -650,22 +747,9 @@
                 font-size: 3rem;
             }
 
-            .features-grid {
-                grid-template-columns: 1fr;
+            #three-canvas {
+                height: 400px;
             }
-        }
-
-        /* Footer */
-        footer {
-            padding: 40px 20px;
-            background: #000;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        footer p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -673,72 +757,215 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
+            <div class="funding-badge">
+                <i class="fas fa-award"></i> Funded by Hacks/Hackers - $10,000 Grant
+            </div>
             <h1>MinneStudio</h1>
             <p class="hero-tagline">
-                Your AI-powered content creation suite that lets newsrooms instantly convert articles into engaging audio podcasts with customizable voices, while also enabling article translation and summarization, and newsletter generation - all in just a few clicks.
+                The AI-Powered Newsroom Suite
             </p>
-            <a href="#watch-demo" class="cta-button">Watch Demo</a>
-            <a href="#features" class="cta-button">Explore Features</a>
+            <p class="hero-subtitle">
+                Accelerate your journalism workflow with intelligent automation and human oversight. Transform content creation, streamline fact-checking, and engage your audience like never before.
+            </p>
+            <a href="#tools" class="cta-button">
+                <i class="fas fa-play-circle"></i> Explore Tools
+            </a>
+            <a href="#watch-demo" class="cta-button">
+                <i class="fas fa-video"></i> Watch Demo
+            </a>
         </div>
-        <div class="scroll-indicator" onclick="document.getElementById('features').scrollIntoView({ behavior: 'smooth' })">
+        <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' })">
             <svg viewBox="0 0 24 24">
                 <path d="M7 10l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
+    <!-- About Section -->
+    <section id="about" class="about">
         <div class="container">
-            <h2 class="section-title">Powerful Features</h2>
-            <p class="section-subtitle">Transform your content creation workflow with cutting-edge AI technology</p>
+            <h2 class="section-title">Empowering Modern Newsrooms</h2>
+            <div class="about-content">
+                <p>
+                    MinneStudio is a comprehensive suite of AI-powered tools designed specifically for journalists and newsrooms to accelerate content production processes while maintaining editorial integrity through human-in-the-loop workflows.
+                </p>
+                <p>
+                    From converting raw materials into polished articles to creating engaging podcasts and newsletters, MinneStudio automates the tedious work so journalists can focus on what matters most: storytelling and truth-seeking.
+                </p>
+            </div>
+            <div class="about-highlights">
+                <div class="highlight-item">
+                    <i class="fas fa-robot"></i>
+                    <h4>AI-Powered</h4>
+                    <p>Advanced OCR, LLMs, and RAG technology</p>
+                </div>
+                <div class="highlight-item">
+                    <i class="fas fa-user-check"></i>
+                    <h4>Human-in-the-Loop</h4>
+                    <p>Journalist review and approval at every step</p>
+                </div>
+                <div class="highlight-item">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Lightning Fast</h4>
+                    <p>Transform content in seconds, not hours</p>
+                </div>
+                <div class="highlight-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Fact-Checked</h4>
+                    <p>AI-powered verification with confidence scoring</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Flow Section -->
+    <section id="workflow" class="flow-section">
+        <div class="container">
+            <h2 class="section-title">Interactive Workflow</h2>
+            <p class="section-subtitle">
+                See how MinneStudio's tools work together seamlessly. Interact with the 3D visualization below.
+            </p>
+            <div id="three-canvas"></div>
+            <div class="flow-legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                    <div>
+                        <h5>Input Sources</h5>
+                        <p>PDFs, audio, handwritten notes</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                    <div>
+                        <h5>Processing</h5>
+                        <p>AI conversion and analysis</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                    <div>
+                        <h5>Output</h5>
+                        <p>Articles, podcasts, newsletters</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                    <div>
+                        <h5>Verification</h5>
+                        <p>Fact-checking with confidence scores</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="tools">
+        <div class="container">
+            <h2 class="section-title">Three Powerful Tools</h2>
+            <p class="section-subtitle">
+                Each tool is designed to solve specific challenges in modern journalism, working independently or as part of an integrated workflow.
+            </p>
             
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎙️</div>
-                    <h3>AI Podcast Conversion</h3>
-                    <p>Instantly convert articles into engaging audio podcasts with a wide range of customizable voices and personalities.</p>
+            <div class="tools-grid">
+                <!-- Tool 1: PDF/Audio to News -->
+                <div class="tool-card">
+                    <div class="tool-content">
+                        <div class="tool-icon-large">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3>PDF/Audio to News</h3>
+                        <p>
+                            Transform raw journalism materials into publication-ready articles. Our advanced OCR model processes PDFs, handwritten notes, and audio recordings of interviews or news coverage, converting them into structured articles with automatic three-point summaries.
+                        </p>
+                        <ul class="tool-features">
+                            <li><i class="fas fa-check-circle"></i> Advanced OCR for handwritten and printed text</li>
+                            <li><i class="fas fa-check-circle"></i> Audio-to-text transcription for interviews</li>
+                            <li><i class="fas fa-check-circle"></i> Auto-generated three-point summaries</li>
+                            <li><i class="fas fa-check-circle"></i> Journalist review and sign-off workflow</li>
+                            <li><i class="fas fa-check-circle"></i> Secure database storage for approved content</li>
+                        </ul>
+                    </div>
+                    <div class="tool-visual">
+                        <div class="tool-visual-box">
+                            <div style="position: relative; z-index: 1; text-align: center;">
+                                <i class="fas fa-file-pdf" style="font-size: 4rem; color: rgba(255,255,255,0.3); margin-bottom: 20px;"></i>
+                                <i class="fas fa-arrow-down" style="font-size: 2rem; color: rgba(139, 92, 246, 0.5); display: block; margin: 20px 0;"></i>
+                                <i class="fas fa-newspaper" style="font-size: 4rem; color: rgba(255,255,255,0.3);"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🌍</div>
-                    <h3>Intelligent Translation & Summarization</h3>
-                    <p>Effortlessly translate content to reach a global audience and generate concise summaries for quick insights.</p>
+
+                <!-- Tool 2: AI Podcast Creation -->
+                <div class="tool-card">
+                    <div class="tool-content">
+                        <div class="tool-icon-large">
+                            <i class="fas fa-microphone-alt"></i>
+                        </div>
+                        <h3>AI Podcast Creation</h3>
+                        <p>
+                            Create professional, engaging podcasts from your news content in minutes. Select from multiple voice personalities, customize podcast length, insert dynamic advertisements, and control every aspect of your audio content with precision.
+                        </p>
+                        <ul class="tool-features">
+                            <li><i class="fas fa-check-circle"></i> Multiple custom voice personas and names</li>
+                            <li><i class="fas fa-check-circle"></i> Flexible podcast length customization</li>
+                            <li><i class="fas fa-check-circle"></i> Dynamic ad insertion (pre-roll, mid-roll, post-roll)</li>
+                            <li><i class="fas fa-check-circle"></i> Single article or topic compilation podcasts</li>
+                            <li><i class="fas fa-check-circle"></i> Natural conversational AI delivery</li>
+                        </ul>
+                    </div>
+                    <div class="tool-visual">
+                        <div class="tool-visual-box">
+                            <div style="position: relative; z-index: 1; text-align: center;">
+                                <i class="fas fa-newspaper" style="font-size: 4rem; color: rgba(255,255,255,0.3); margin-bottom: 20px;"></i>
+                                <i class="fas fa-arrow-down" style="font-size: 2rem; color: rgba(139, 92, 246, 0.5); display: block; margin: 20px 0;"></i>
+                                <i class="fas fa-podcast" style="font-size: 4rem; color: rgba(255,255,255,0.3);"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">📧</div>
-                    <h3>Newsletter Generation</h3>
-                    <p>Automatically create and launch engaging newsletters from your existing content to keep your audience informed.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3>Dynamic Ad Placement</h3>
-                    <p>Monetize your content by inserting ads. Choose from pre-roll, mid-roll, or post-roll placements to maximize revenue.</p>
+
+                <!-- Tool 3: MinneStudio Chat -->
+                <div class="tool-card">
+                    <div class="tool-content">
+                        <div class="tool-icon-large">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>MinneStudio Chat</h3>
+                        <p>
+                            Your intelligent newsroom assistant powered by the latest LLM models. Fact-check articles with confidence scoring, generate newsletters, and streamline editorial workflows—all through a conversational interface with powerful backend systems.
+                        </p>
+                        <ul class="tool-features">
+                            <li><i class="fas fa-check-circle"></i> Latest LLM models for intelligent responses</li>
+                            <li><i class="fas fa-check-circle"></i> Advanced fact-checking with web scraping</li>
+                            <li><i class="fas fa-check-circle"></i> RAG-powered verification against news database</li>
+                            <li><i class="fas fa-check-circle"></i> Evidence presentation with confidence scores</li>
+                            <li><i class="fas fa-check-circle"></i> Newsletter generation and email distribution</li>
+                            <li><i class="fas fa-check-circle"></i> Two-click review and send workflow</li>
+                        </ul>
+                    </div>
+                    <div class="tool-visual">
+                        <div class="tool-visual-box">
+                            <div style="position: relative; z-index: 1; text-align: center;">
+                                <i class="fas fa-search" style="font-size: 4rem; color: rgba(255,255,255,0.3); margin-bottom: 20px;"></i>
+                                <i class="fas fa-arrow-down" style="font-size: 2rem; color: rgba(139, 92, 246, 0.5); display: block; margin: 20px 0;"></i>
+                                <i class="fas fa-check-double" style="font-size: 4rem; color: rgba(255,255,255,0.3);"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Demo Section -->
-    <!-- <section class="demo-section">
-        <div class="demo-container">
-            <div class="demo-content">
-                <h2>See MinneStudio in Action</h2>
-                <p>Watch how newsrooms are transforming their content strategy with our AI-powered suite. From article to podcast in seconds, reaching audiences across all channels.</p>
-                <a href="https://youtu.be/pTJhoVkVS_8" class="cta-button">Watch Demo</a>
-            </div>
-            <div class="demo-visual">
-                <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=800&q=80" alt="MinneStudio Dashboard">
-            </div>
-        </div>
-    </section> -->
-
     <section class="watch-demo" id="watch-demo">
         <div class="container">
-            <h2 class="section-title">Watch the Demo</h2>
-            <p class="section-subtitle">See MinneStudio in action and discover the future of AI-driven podcast generation</p>
+            <h2 class="section-title">See MinneStudio in Action</h2>
+            <p class="section-subtitle">
+                Watch our comprehensive demo to see how MinneStudio transforms newsroom workflows
+            </p>
 
             <div class="video-container">
                 <div class="video-wrapper">
@@ -748,7 +975,6 @@
                         allowfullscreen>
                     </iframe>
                 </div>
-                <div class="video-glow"></div>
             </div>
         </div>
     </section>
@@ -757,7 +983,7 @@
     <section class="creators">
         <div class="container">
             <h2 class="section-title">Meet the Creators</h2>
-            <p class="section-subtitle">The brilliant minds behind MinneStudio</p>
+            <p class="section-subtitle">Computer Science graduate students at the University of Minnesota</p>
             
             <div class="creators-grid">
                 <div class="creator-card">
@@ -765,9 +991,11 @@
                         <img src="assets/Arunachalam_Img.jpeg" alt="Arunachalam Manikandan">
                     </div>
                     <h3 class="creator-name">Arunachalam Manikandan</h3>
-                    <p class="creator-role">CS Grad Student</p>
+                    <p class="creator-role">CS Graduate Student</p>
                     <p class="creator-org">University of Minnesota</p>
-                    <a href="https://www.linkedin.com/in/arunachalam-manikandan/" target="_blank" class="creator-linkedin">Connect on LinkedIn</a>
+                    <a href="https://www.linkedin.com/in/arunachalam-manikandan/" target="_blank" class="creator-linkedin">
+                        <i class="fab fa-linkedin"></i> Connect
+                    </a>
                 </div>
                 
                 <div class="creator-card">
@@ -775,9 +1003,11 @@
                         <img src="assets/Dipan_Img.jpeg" alt="Dipan Bag">
                     </div>
                     <h3 class="creator-name">Dipan Bag</h3>
-                    <p class="creator-role">CS Grad Student</p>
+                    <p class="creator-role">CS Graduate Student</p>
                     <p class="creator-org">University of Minnesota</p>
-                    <a href="https://www.linkedin.com/in/dipan-bag/" target="_blank" class="creator-linkedin">Connect on LinkedIn</a>
+                    <a href="https://www.linkedin.com/in/dipan-bag/" target="_blank" class="creator-linkedin">
+                        <i class="fab fa-linkedin"></i> Connect
+                    </a>
                 </div>
                 
                 <div class="creator-card">
@@ -785,9 +1015,11 @@
                         <img src="assets/Erina_Img.jpeg" alt="Erina Karati">
                     </div>
                     <h3 class="creator-name">Erina Karati</h3>
-                    <p class="creator-role">CS Grad Student</p>
+                    <p class="creator-role">CS Graduate Student</p>
                     <p class="creator-org">University of Minnesota</p>
-                    <a href="https://www.linkedin.com/in/ekarati/" target="_blank" class="creator-linkedin">Connect on LinkedIn</a>
+                    <a href="https://www.linkedin.com/in/ekarati/" target="_blank" class="creator-linkedin">
+                        <i class="fab fa-linkedin"></i> Connect
+                    </a>
                 </div>
             </div>
         </div>
@@ -796,19 +1028,143 @@
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="container">
-            <h2>Ready to Transform Your Content?</h2>
-            <p>Join thousands of newsrooms already using MinneStudio to revolutionize their content creation.</p>
-            <a href="#" class="cta-button cta-large">Try MinneStudio!</a>
+            <h2>Ready to Transform Your Newsroom?</h2>
+            <p>Join the future of journalism with AI-powered tools designed by journalists, for journalists.</p>
+            <a href="#" class="cta-button cta-large">
+                <i class="fas fa-rocket"></i> Get Started Today
+            </a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 MinneStudio. Created with passion at the University of Minnesota.</p>
+        <p>&copy; 2025 MinneStudio. Proudly funded by Hacks/Hackers. Created at the University of Minnesota.</p>
     </footer>
 
     <script>
-        // Add smooth reveal animations on scroll
+        // Three.js 3D Flowchart
+        let scene, camera, renderer, nodes = [], connections = [];
+        let mouseX = 0, mouseY = 0;
+
+        function initThree() {
+            const canvas = document.getElementById('three-canvas');
+            const width = canvas.offsetWidth;
+            const height = canvas.offsetHeight;
+
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            camera.position.z = 15;
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(width, height);
+            renderer.setClearColor(0x000000, 0.3);
+            canvas.appendChild(renderer.domElement);
+
+            // Create workflow nodes
+            const nodeData = [
+                { pos: [-8, 3, 0], color: 0x4facfe, label: 'PDF' },
+                { pos: [-8, 0, 0], color: 0x4facfe, label: 'Audio' },
+                { pos: [-8, -3, 0], color: 0x4facfe, label: 'Notes' },
+                { pos: [-2, 0, 0], color: 0x667eea, label: 'OCR/AI' },
+                { pos: [4, 0, 0], color: 0x764ba2, label: 'Article' },
+                { pos: [10, 3, 0], color: 0xf093fb, label: 'Podcast' },
+                { pos: [10, 0, 0], color: 0xf093fb, label: 'Newsletter' },
+                { pos: [4, -4, 0], color: 0xfee140, label: 'Fact-Check' }
+            ];
+
+            nodeData.forEach(data => {
+                const geometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+                const material = new THREE.MeshPhongMaterial({ 
+                    color: data.color,
+                    emissive: data.color,
+                    emissiveIntensity: 0.3,
+                    shininess: 100
+                });
+                const cube = new THREE.Mesh(geometry, material);
+                cube.position.set(...data.pos);
+                scene.add(cube);
+                nodes.push(cube);
+            });
+
+            // Create connections
+            const connectionPairs = [
+                [0, 3], [1, 3], [2, 3], // Inputs to OCR
+                [3, 4], // OCR to Article
+                [4, 5], [4, 6], // Article to outputs
+                [4, 7], [7, 4] // Fact-check loop
+            ];
+
+            connectionPairs.forEach(pair => {
+                const points = [];
+                points.push(nodes[pair[0]].position);
+                points.push(nodes[pair[1]].position);
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                const material = new THREE.LineBasicMaterial({ 
+                    color: 0x8b5cf6,
+                    opacity: 0.6,
+                    transparent: true
+                });
+                const line = new THREE.Line(geometry, material);
+                scene.add(line);
+                connections.push(line);
+            });
+
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            const pointLight1 = new THREE.PointLight(0x8b5cf6, 1, 100);
+            pointLight1.position.set(10, 10, 10);
+            scene.add(pointLight1);
+
+            const pointLight2 = new THREE.PointLight(0xff006e, 1, 100);
+            pointLight2.position.set(-10, -10, 10);
+            scene.add(pointLight2);
+
+            // Mouse interaction
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                mouseX = ((e.clientX - rect.left) / width) * 2 - 1;
+                mouseY = -((e.clientY - rect.top) / height) * 2 + 1;
+            });
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotate nodes
+            nodes.forEach((node, i) => {
+                node.rotation.x += 0.005;
+                node.rotation.y += 0.005;
+                
+                // Add floating effect
+                node.position.y += Math.sin(Date.now() * 0.001 + i) * 0.002;
+            });
+
+            // Camera follows mouse
+            camera.position.x += (mouseX * 2 - camera.position.x) * 0.05;
+            camera.position.y += (mouseY * 2 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
+
+        // Initialize Three.js when page loads
+        window.addEventListener('load', initThree);
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('three-canvas');
+            const width = canvas.offsetWidth;
+            const height = canvas.offsetHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        });
+
+        // Scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
@@ -823,61 +1179,21 @@
             });
         }, observerOptions);
 
-        // Observe all feature cards and creator cards
-        document.querySelectorAll('.feature-card, .creator-card').forEach(card => {
+        document.querySelectorAll('.tool-card, .creator-card, .highlight-item').forEach(card => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(30px)';
             card.style.transition = 'all 0.8s ease';
             observer.observe(card);
         });
 
-        // Parallax effect for hero section gradient
+        // Parallax effect
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const hero = document.querySelector('.hero');
-            if (hero) {
+            if (hero && scrolled < window.innerHeight) {
                 hero.style.backgroundPosition = `${scrolled * 0.5}px ${scrolled * 0.5}px`;
             }
         });
-
-        // Add hover effects to buttons
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('mouseenter', function(e) {
-                const rect = this.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const ripple = document.createElement('span');
-                ripple.style.position = 'absolute';
-                ripple.style.background = 'rgba(255,255,255,0.5)';
-                ripple.style.width = '20px';
-                ripple.style.height = '20px';
-                ripple.style.borderRadius = '50%';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.style.animation = 'ripple 0.6s ease-out';
-                ripple.style.pointerEvents = 'none';
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => ripple.remove(), 600);
-            });
-        });
-
-        // Add ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    width: 300px;
-                    height: 300px;
-                    margin-left: -150px;
-                    margin-top: -150px;
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
