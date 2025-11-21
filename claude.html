@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MinneStudio - Cost Analysis & Feature Comparison Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 20px 30px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #495057;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-tab:hover {
+            background: #e9ecef;
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .feature-yes {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .feature-no {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .feature-partial {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .calculator {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .input-group {
+            margin: 20px 0;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        .result-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .cost-breakdown {
+            margin: 15px 0;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .cost-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #667eea;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .highlight-box h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .highlight-box p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .pricing-recommendation {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .pricing-recommendation h3 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 30px 0;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .feature-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            margin: 3px;
+        }
+
+        .badge-unique {
+            background: #28a745;
+            color: white;
+        }
+
+        .badge-standard {
+            background: #6c757d;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-table {
+                font-size: 14px;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px;
+            }
+        }
+
+        .api-cost-detail {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .api-cost-detail h4 {
+            color: #004085;
+            margin-bottom: 10px;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.95em;
+        }
+
+        .metric-label {
+            color: #666;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 MinneStudio Cost Analysis Dashboard</h1>
+            <p>Comprehensive Feature Comparison & Pricing Strategy for Newsroom Licensing</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('comparison')">Feature Comparison</button>
+            <button class="nav-tab" onclick="showTab('technical')">Technical Stack & API Costs</button>
+            <button class="nav-tab" onclick="showTab('calculator')">Cost Calculator</button>
+            <button class="nav-tab" onclick="showTab('pricing')">Pricing Strategy</button>
+        </div>
+
+        <div class="content">
+            <!-- Tab 1: Feature Comparison -->
+            <div id="comparison" class="tab-content active">
+                <h2 style="margin-bottom: 30px;">Product Feature Comparison</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%;">Feature</th>
+                            <th style="width: 20%;">MinneStudio</th>
+                            <th style="width: 20%;">NotebookLM</th>
+                            <th style="width: 20%;">GenSpark AI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Developed by</strong></td>
+                            <td class="feature-yes">Arun, Erina and Dipan</td>
+                            <td class="feature-yes">Google</td>
+                            <td class="feature-yes">US Company (Invested by Chinese Company Tencent)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AI Podcast Generation</strong></td>
+                            <td class="feature-yes">✓ Yes <span class="feature-badge badge-unique">Multiple Voices</span></td>
+                            <td class="feature-yes">✓ Yes (Audio Overview)</td>
+                            <td class="feature-yes">✓ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Custom Voice Personas</strong></td>
+                            <td class="feature-yes">✓ Yes <span class="feature-badge badge-unique">UNIQUE</span></td>
+                            <td class="feature-no">✗ No (Fixed 2 hosts)</td>
+                            <td class="feature-no">✗ No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Advertisement Generation & Insertion</strong></td>
+                            <td class="feature-yes">✓ Yes <span class="feature-badge badge-unique">UNIQUE</span></td>
+                            <td class="feature-no">✗ No</td>
+                            <td class="feature-no">✗ No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Podcast Length Control</strong></td>
+                            <td class="feature-yes">✓ Yes (Customizable)</td>
+                            <td class="feature-partial">~ Partial (Auto ~10min)</td>
+                            <td class="feature-no">✗ No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>API Access for Integration</strong></td>
+                            <td class="feature-yes">✓ Yes <span class="feature-badge badge-unique">UNIQUE</span></td>
+                            <td class="feature-no">✗ No (Web only)</td>
+                            <td class="feature-no">✗ No (Web only)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Multi-language Support</strong></td>
+                            <td class="feature-yes">✓ Yes (Gemini + Whisper)</td>
+                            <td class="feature-partial">~ Partial (English only for podcasts)</td>
+                            <td class="feature-yes">✓ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Human-in-the-Loop Workflow</strong></td>
+                            <td class="feature-yes">✓ Yes <span class="feature-badge badge-unique">Editorial Control</span></td>
+                            <td class="feature-no">✗ No</td>
+                            <td class="feature-no">✗ No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cost Structure</strong></td>
+                            <td>Per License Per Month</td>
+                            <td>$220 - $2400 Per Year</td>
+                            <td>$220 Per Year</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box">
+                    <h3>MinneStudio Unique Advantages</h3>
+                    <p style="font-size: 1.1em; margin-top: 15px;">
+                        ✨ Custom Voice Personas • 📢 Ad Generation & Insertion • 📰 Newsletter Automation • 
+                        🎙️ Audio Interview Processing • 🔌 API Access • 👨‍💼 Human-in-the-Loop Editorial Control
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tab 2: Technical Stack & API Costs -->
+            <div id="technical" class="tab-content">
+                <h2 style="margin-bottom: 30px;">Technical Stack & API Pricing Breakdown</h2>
+
+                <div class="result-card">
+                    <h3>1. Podcast Generation Feature</h3>
+                    <div class="api-cost-detail">
+                        <h4>ElevenLabs Text-to-Speech API</h4>
+                        <div class="metric">
+                            <span class="metric-label">Credits per 10-min podcast:</span>
+                            <span class="metric-value">~4,000 credits</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Creator Plan (100k credits/month):</span>
+                            <span class="metric-value">$22/month (~25 podcasts)</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Pro Plan (500k credits/month):</span>
+                            <span class="metric-value">$99/month (~125 podcasts)</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Cost per podcast:</span>
+                            <span class="metric-value">$0.79 - $0.88</span>
+                        </div>
+                    </div>
+
+                    <div class="api-cost-detail">
+                        <h4>Google Gemini API (Script Generation)</h4>
+                        <div class="metric">
+                            <span class="metric-label">Model:</span>
+                            <span class="metric-value">Gemini 2.5 Flash</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Input cost (10-min script ~2k tokens):</span>
+                            <span class="metric-value">$0.0006 per script</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Output cost (~3k tokens):</span>
+                            <span class="metric-value">$0.0075 per script</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Total Gemini cost per podcast:</span>
+                            <span class="metric-value">~$0.01</span>
+                        </div>
+                    </div>
+
+                    <div class="api-cost-detail">
+                        <h4>Perplexity API (Research/Web Search)</h4>
+                        <div class="metric">
+                            <span class="metric-label">Search API cost:</span>
+                            <span class="metric-value">$5 per 1,000 searches</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Searches per podcast:</span>
+                            <span class="metric-value">2-3 searches</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Cost per podcast:</span>
+                            <span class="metric-value">$0.01 - $0.015</span>
+                        </div>
+                    </div>
+
+                    <div class="cost-breakdown">
+                        <div class="cost-item">
+                            <span>ElevenLabs TTS:</span>
+                            <span>$0.88</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Gemini Script Gen:</span>
+                            <span>$0.01</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Perplexity Research:</span>
+                            <span>$0.015</span>
+                        </div>
+                        <div class="cost-item">
+                            <span><strong>Total Cost Per Podcast:</strong></span>
+                            <span><strong>~$0.91</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>2. PDF/Audio to News Article</h3>
+                    
+                    <div class="api-cost-detail">
+                        <h4>PDF Processing - Google Document AI OCR</h4>
+                        <div class="metric">
+                            <span class="metric-label">OCR Processor cost:</span>
+                            <span class="metric-value">$30 per 1,000 pages</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Cost per 10-page PDF:</span>
+                            <span class="metric-value">$0.30</span>
+                        </div>
+                    </div>
+
+                    <div class="api-cost-detail">
+                        <h4>Audio Processing - OpenAI Whisper API</h4>
+                        <div class="metric">
+                            <span class="metric-label">Transcription cost:</span>
+                            <span class="metric-value">$0.006 per minute</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Cost for 30-min interview:</span>
+                            <span class="metric-value">$0.18</span>
+                        </div>
+                    </div>
+
+                    <div class="api-cost-detail">
+                        <h4>OpenAI GPT-4o Mini (Content Processing)</h4>
+                        <div class="metric">
+                            <span class="metric-label">Input: $0.15/1M tokens</span>
+                            <span class="metric-value">~$0.003 per article</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Output: $0.60/1M tokens</span>
+                            <span class="metric-value">~$0.012 per article</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Total GPT-4o Mini:</span>
+                            <span class="metric-value">~$0.015</span>
+                        </div>
+                    </div>
+
+                    <div class="cost-breakdown">
+                        <div class="cost-item">
+                            <span>PDF OCR (10 pages):</span>
+                            <span>$0.30</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>OR Audio Transcription (30min):</span>
+                            <span>$0.18</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>GPT-4o Mini Processing:</span>
+                            <span>$0.015</span>
+                        </div>
+                        <div class="cost-item">
+                            <span><strong>Cost Per Article (PDF):</strong></span>
+                            <span><strong>~$0.32</strong></span>
+                        </div>
+                        <div class="cost-item" style="border-top: 1px solid #e9ecef; padding-top: 10px;">
+                            <span><strong>Cost Per Article (Audio):</strong></span>
+                            <span><strong>~$0.20</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>3. Newsletter Generation</h3>
+                    
+                    <div class="api-cost-detail">
+                        <h4>Perplexity API (News Gathering)</h4>
+                        <div class="metric">
+                            <span class="metric-label">Searches per newsletter:</span>
+                            <span class="metric-value">~10 searches</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Cost:</span>
+                            <span class="metric-value">$0.05</span>
+                        </div>
+                    </div>
+
+                    <div class="api-cost-detail">
+                        <h4>OpenAI GPT-4o Mini (Newsletter Composition)</h4>
+                        <div class="metric">
+                            <span class="metric-label">Token usage:</span>
+                            <span class="metric-value">~5k input, ~3k output</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Cost:</span>
+                            <span class="metric-value">~$0.003</span>
+                        </div>
+                    </div>
+
+                    <div class="api-cost-detail">
+                        <h4>Zapier Automation (Email Delivery)</h4>
+                        <div class="metric">
+                            <span class="metric-label">Professional Plan:</span>
+                            <span class="metric-value">$19.99/month (750 tasks)</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Cost per email send:</span>
+                            <span class="metric-value">~$0.027</span>
+                        </div>
+                    </div>
+
+                    <div class="api-cost-detail">
+                        <h4>Firebase Storage (Assets & Database)</h4>
+                        <div class="metric">
+                            <span class="metric-label">Free tier:</span>
+                            <span class="metric-value">5GB storage, 1GB/day bandwidth</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Blaze plan (if exceeded):</span>
+                            <span class="metric-value">$0.026/GB stored, $0.12/GB bandwidth</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Typical cost per newsletter:</span>
+                            <span class="metric-value">~$0.01</span>
+                        </div>
+                    </div>
+
+                    <div class="cost-breakdown">
+                        <div class="cost-item">
+                            <span>Perplexity Searches:</span>
+                            <span>$0.05</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>GPT-4o Mini:</span>
+                            <span>$0.003</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Zapier Email Delivery:</span>
+                            <span>$0.027</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Firebase Storage:</span>
+                            <span>$0.01</span>
+                        </div>
+                        <div class="cost-item">
+                            <span><strong>Total Cost Per Newsletter:</strong></span>
+                            <span><strong>~$0.09</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>4. Fact Verification</h3>
+                    
+                    <div class="api-cost-detail">
+                        <h4>Perplexity API (Source Verification)</h4>
+                        <div class="metric">
+                            <span class="metric-label">Searches per verification:</span>
+                            <span class="metric-value">5-8 searches</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Cost:</span>
+                            <span class="metric-value">$0.025 - $0.04</span>
+                        </div>
+                    </div>
+
+                    <div class="api-cost-detail">
+                        <h4>OpenAI GPT-4o Mini (Analysis)</h4>
+                        <div class="metric">
+                            <span class="metric-label">Cost per verification:</span>
+                            <span class="metric-value">~$0.01</span>
+                        </div>
+                    </div>
+
+                    <div class="cost-breakdown">
+                        <div class="cost-item">
+                            <span><strong>Total Cost Per Fact Check:</strong></span>
+                            <span><strong>~$0.04</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>5. Infrastructure Costs (GCP Cloud Run)</h3>
+                    
+                    <div class="api-cost-detail">
+                        <h4>Cloud Run Pricing (Request-based)</h4>
+                        <div class="metric">
+                            <span class="metric-label">CPU (per vCPU-second):</span>
+                            <span class="metric-value">$0.000024</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Memory (per GiB-second):</span>
+                            <span class="metric-value">$0.0000025</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Requests (per 1M):</span>
+                            <span class="metric-value">$0.40</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Free tier monthly:</span>
+                            <span class="metric-value">2M requests, 360k vCPU-seconds, 180k GiB-seconds</span>
+                        </div>
+                    </div>
+
+                    <div class="api-cost-detail">
+                        <h4>Firebase Authentication</h4>
+                        <div class="metric">
+                            <span class="metric-label">Free tier:</span>
+                            <span class="metric-value">Unlimited auth (email/password)</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Identity Platform (if needed):</span>
+                            <span class="metric-value">$0.006 per active user/month</span>
+                        </div>
+                    </div>
+
+                    <div class="api-cost-detail">
+                        <h4>Estimated Monthly Infrastructure for 1 Newsroom</h4>
+                        <div class="metric">
+                            <span class="metric-label">Cloud Run (moderate usage):</span>
+                            <span class="metric-value">~$15-30/month</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Firebase (small team):</span>
+                            <span class="metric-value">~$5-10/month</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Total Infrastructure:</span>
+                            <span class="metric-value"><strong>~$20-40/month</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>Summary: Cost Per Feature</h3>
+                    <div style="text-align: left; margin-top: 20px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 800px; margin: 0 auto;">
+                            <div>📻 <strong>Podcast (10-min):</strong> $0.91</div>
+                            <div>📄 <strong>PDF to Article:</strong> $0.32</div>
+                            <div>🎙️ <strong>Audio to Article:</strong> $0.20</div>
+                            <div>📧 <strong>Newsletter:</strong> $0.09</div>
+                            <div>✅ <strong>Fact Check:</strong> $0.04</div>
+                            <div>🏗️ <strong>Infrastructure/month:</strong> $25-40</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Cost Calculator -->
+            <div id="calculator" class="tab-content">
+                <h2 style="margin-bottom: 30px;">Interactive Cost Calculator</h2>
+                
+                <div class="calculator">
+                    <h3 style="margin-bottom: 25px;">Configure Your Newsroom Usage</h3>
+                    
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Number of Newsrooms:</label>
+                            <input type="number" id="newsrooms" value="1" min="1" max="100" oninput="calculateCosts()">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Growth Rate (% per month):</label>
+                            <input type="number" id="growthRate" value="0" min="0" max="100" step="5" oninput="calculateCosts()">
+                        </div>
+                    </div>
+
+                    <h4 style="margin: 30px 0 15px 0;">Monthly Usage Per Newsroom</h4>
+                    
+                    <div class="grid-3">
+                        <div class="input-group">
+                            <label>Podcasts per month:</label>
+                            <input type="number" id="podcasts" value="30" min="0" oninput="calculateCosts()">
+                            <small style="color: #666;">Cost: $0.91 each</small>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>PDF Articles per month:</label>
+                            <input type="number" id="pdfArticles" value="20" min="0" oninput="calculateCosts()">
+                            <small style="color: #666;">Cost: $0.32 each</small>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Audio Articles per month:</label>
+                            <input type="number" id="audioArticles" value="15" min="0" oninput="calculateCosts()">
+                            <small style="color: #666;">Cost: $0.20 each</small>
+                        </div>
+                    </div>
+
+                    <div class="grid-3">
+                        <div class="input-group">
+                            <label>Newsletters per month:</label>
+                            <input type="number" id="newsletters" value="60" min="0" oninput="calculateCosts()">
+                            <small style="color: #666;">Cost: $0.09 each</small>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Fact Checks per month:</label>
+                            <input type="number" id="factChecks" value="50" min="0" oninput="calculateCosts()">
+                            <small style="color: #666;">Cost: $0.04 each</small>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Infrastructure Level:</label>
+                            <select id="infrastructure" onchange="calculateCosts()">
+                                <option value="25">Basic ($25/mo)</option>
+                                <option value="40" selected>Standard ($40/mo)</option>
+                                <option value="60">Advanced ($60/mo)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button onclick="calculateCosts()" style="margin-top: 25px; width: 100%;">
+                        Calculate Monthly Costs
+                    </button>
+                </div>
+
+                <div id="results" style="display: none;">
+                    <div class="result-card">
+                        <h3>Cost Breakdown Per Newsroom</h3>
+                        <div class="cost-breakdown">
+                            <div class="cost-item">
+                                <span>Podcasts (<span id="result-podcast-count"></span> × $0.91):</span>
+                                <span id="result-podcast"></span>
+                            </div>
+                            <div class="cost-item">
+                                <span>PDF Articles (<span id="result-pdf-count"></span> × $0.32):</span>
+                                <span id="result-pdf"></span>
+                            </div>
+                            <div class="cost-item">
+                                <span>Audio Articles (<span id="result-audio-count"></span> × $0.20):</span>
+                                <span id="result-audio"></span>
+                            </div>
+                            <div class="cost-item">
+                                <span>Newsletters (<span id="result-newsletter-count"></span> × $0.09):</span>
+                                <span id="result-newsletter"></span>
+                            </div>
+                            <div class="cost-item">
+                                <span>Fact Checks (<span id="result-fact-count"></span> × $0.04):</span>
+                                <span id="result-fact"></span>
+                            </div>
+                            <div class="cost-item">
+                                <span>Infrastructure:</span>
+                                <span id="result-infra"></span>
+                            </div>
+                            <div class="cost-item">
+                                <span><strong>Total Per Newsroom:</strong></span>
+                                <span id="result-per-newsroom"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="highlight-box">
+                            <h2 id="result-total-cost"></h2>
+                            <p>Total Monthly Operating Cost</p>
+                            <p style="font-size: 0.9em; margin-top: 10px;">For <span id="result-newsroom-count"></span> newsroom(s)</p>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <h2 id="result-yearly-cost"></h2>
+                            <p>Projected Annual Cost</p>
+                            <p style="font-size: 0.9em; margin-top: 10px;">Without growth rate applied</p>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3>12-Month Cost Projection with Growth</h3>
+                        <div id="growthProjection" style="margin-top: 20px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 4: Pricing Strategy -->
+            <div id="pricing" class="tab-content">
+                <h2 style="margin-bottom: 30px;">Recommended Pricing Strategy</h2>
+
+                <div class="result-card">
+                    <h3>Cost Structure Analysis</h3>
+                    <p style="margin-bottom: 20px;">Based on realistic newsroom usage: 1 podcast/day, 2 newsletters/day, mixed article processing:</p>
+                    
+                    <div class="cost-breakdown">
+                        <div class="cost-item">
+                            <span>Podcasts (30/month × $0.91):</span>
+                            <span>$27.30</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>PDF Articles (20/month × $0.32):</span>
+                            <span>$6.40</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Audio Articles (15/month × $0.20):</span>
+                            <span>$3.00</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Newsletters (60/month × $0.09):</span>
+                            <span>$5.40</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Fact Checks (50/month × $0.04):</span>
+                            <span>$2.00</span>
+                        </div>
+                        <div class="cost-item">
+                            <span>Infrastructure (Cloud Run + Firebase):</span>
+                            <span>$35.00</span>
+                        </div>
+                        <div class="cost-item">
+                            <span><strong>Total Monthly Cost:</strong></span>
+                            <span><strong>$79.10</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pricing-recommendation">
+                    <h3>💡 Recommended Pricing Tiers</h3>
+                    <div style="margin-top: 20px;">
+                        <h4 style="margin: 20px 0 10px 0;">Tier 1: Starter Package - $299/month</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Up to 30 podcasts/month</li>
+                            <li>Up to 25 PDF/Audio articles/month</li>
+                            <li>Up to 60 newsletters/month</li>
+                            <li>Unlimited fact-checking</li>
+                            <li>2 team members</li>
+                            <li><strong>Profit Margin: ~277% ($220 profit)</strong></li>
+                        </ul>
+
+                        <h4 style="margin: 20px 0 10px 0;">Tier 2: Professional Package - $599/month</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Up to 100 podcasts/month (Cost: ~$91)</li>
+                            <li>Up to 80 PDF/Audio articles/month (Cost: ~$20)</li>
+                            <li>Up to 150 newsletters/month (Cost: ~$13.50)</li>
+                            <li>Unlimited fact-checking</li>
+                            <li>5 team members</li>
+                            <li>Priority support</li>
+                            <li><strong>Estimated Cost: ~$165/month | Profit: ~$434 (263% margin)</strong></li>
+                        </ul>
+
+                        <h4 style="margin: 20px 0 10px 0;">Tier 3: Enterprise Package - $1,499/month</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Up to 300 podcasts/month (Cost: ~$273)</li>
+                            <li>Up to 200 PDF/Audio articles/month (Cost: ~$50)</li>
+                            <li>Up to 500 newsletters/month (Cost: ~$45)</li>
+                            <li>Unlimited fact-checking</li>
+                            <li>Unlimited team members</li>
+                            <li>Dedicated support</li>
+                            <li>Custom API integrations</li>
+                            <li><strong>Estimated Cost: ~$430/month | Profit: ~$1,069 (248% margin)</strong></li>
+                        </ul>
+
+                        <h4 style="margin: 20px 0 10px 0;">Custom/White-Label: Starting at $2,999/month</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Unlimited usage</li>
+                            <li>Custom branding</li>
+                            <li>Dedicated infrastructure</li>
+                            <li>SLA guarantees</li>
+                            <li>Negotiated based on volume</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Key Pricing Considerations</h3>
+                    <div style="line-height: 1.8; margin-top: 15px;">
+                        <p><strong>1. Value-Based Pricing:</strong> MinneStudio saves journalists 10-15 hours/week on content production. At an average journalist salary of $60k/year (~$30/hour), that's $450-600/week in labor savings.</p>
+                        
+                        <p style="margin-top: 15px;"><strong>2. Competitive Analysis:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>NotebookLM: Free (but limited, no custom features)</li>
+                            <li>GenSpark: Free (but no API, no newsroom features)</li>
+                            <li>Professional podcast production: $200-500 per episode</li>
+                            <li>Newsletter automation tools: $50-200/month</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>3. Profitability Targets:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Minimum 200% profit margin on all tiers</li>
+                            <li>Break-even: 2-3 customers per tier</li>
+                            <li>Target: 20-50 newsroom clients in Year 1</li>
+                            <li>Projected Annual Revenue: $150k-$450k</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>4. Scaling Economics:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Volume discounts with ElevenLabs at 10+ clients</li>
+                            <li>Bulk API pricing with OpenAI/Google at scale</li>
+                            <li>Infrastructure costs grow sub-linearly with customers</li>
+                            <li>Estimated margin improvement: +5-10% at 20+ clients</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>💰 Bottom Line Recommendation</h3>
+                    <p style="font-size: 1.1em; margin-top: 15px;">
+                        Start with <strong>$299/month</strong> for small newsrooms, scaling to <strong>$1,499/month</strong> for enterprises.
+                        This provides healthy margins (200-300%) while remaining competitive and delivering exceptional value.
+                    </p>
+                    <p style="font-size: 1em; margin-top: 15px; opacity: 0.9;">
+                        Annual licenses with 15% discount: $3,047 (Starter) | $6,122 (Pro) | $15,292 (Enterprise)
+                    </p>
+                </div>
+
+                <div class="result-card">
+                    <h3>Growth Scenarios</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Clients</th>
+                                <th>Mix</th>
+                                <th>Monthly Cost</th>
+                                <th>Monthly Revenue</th>
+                                <th>Monthly Profit</th>
+                                <th>Margin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>5</td>
+                                <td>3 Starter, 2 Pro</td>
+                                <td>$395</td>
+                                <td>$2,095</td>
+                                <td>$1,700</td>
+                                <td>430%</td>
+                            </tr>
+                            <tr>
+                                <td>20</td>
+                                <td>10 Starter, 8 Pro, 2 Enterprise</td>
+                                <td>$1,580</td>
+                                <td>$10,780</td>
+                                <td>$9,200</td>
+                                <td>582%</td>
+                            </tr>
+                            <tr>
+                                <td>50</td>
+                                <td>20 Starter, 20 Pro, 10 Enterprise</td>
+                                <td>$3,950</td>
+                                <td>$32,950</td>
+                                <td>$29,000</td>
+                                <td>734%</td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>30 Starter, 40 Pro, 30 Enterprise</td>
+                                <td>$7,900</td>
+                                <td>$77,900</td>
+                                <td>$70,000</td>
+                                <td>886%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all nav tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(navTab => navTab.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked nav tab
+            event.target.classList.add('active');
+        }
+
+        function calculateCosts() {
+            // Get input values
+            const newsrooms = parseInt(document.getElementById('newsrooms').value) || 0;
+            const podcasts = parseInt(document.getElementById('podcasts').value) || 0;
+            const pdfArticles = parseInt(document.getElementById('pdfArticles').value) || 0;
+            const audioArticles = parseInt(document.getElementById('audioArticles').value) || 0;
+            const newsletters = parseInt(document.getElementById('newsletters').value) || 0;
+            const factChecks = parseInt(document.getElementById('factChecks').value) || 0;
+            const infrastructure = parseInt(document.getElementById('infrastructure').value) || 25;
+            const growthRate = parseFloat(document.getElementById('growthRate').value) || 0;
+
+            // Calculate costs per newsroom
+            const podcastCost = podcasts * 0.91;
+            const pdfCost = pdfArticles * 0.32;
+            const audioCost = audioArticles * 0.20;
+            const newsletterCost = newsletters * 0.09;
+            const factCheckCost = factChecks * 0.04;
+            
+            const totalPerNewsroom = podcastCost + pdfCost + audioCost + newsletterCost + factCheckCost + infrastructure;
+            const totalMonthlyCost = totalPerNewsroom * newsrooms;
+            const yearlyEstimate = totalMonthlyCost * 12;
+
+            // Display results
+            document.getElementById('results').style.display = 'block';
+            
+            document.getElementById('result-podcast-count').textContent = podcasts;
+            document.getElementById('result-podcast').textContent = '$' + podcastCost.toFixed(2);
+            
+            document.getElementById('result-pdf-count').textContent = pdfArticles;
+            document.getElementById('result-pdf').textContent = '$' + pdfCost.toFixed(2);
+            
+            document.getElementById('result-audio-count').textContent = audioArticles;
+            document.getElementById('result-audio').textContent = '$' + audioCost.toFixed(2);
+            
+            document.getElementById('result-newsletter-count').textContent = newsletters;
+            document.getElementById('result-newsletter').textContent = '$' + newsletterCost.toFixed(2);
+            
+            document.getElementById('result-fact-count').textContent = factChecks;
+            document.getElementById('result-fact').textContent = '$' + factCheckCost.toFixed(2);
+            
+            document.getElementById('result-infra').textContent = '$' + infrastructure.toFixed(2);
+            document.getElementById('result-per-newsroom').textContent = '$' + totalPerNewsroom.toFixed(2);
+            
+            document.getElementById('result-total-cost').textContent = '$' + totalMonthlyCost.toFixed(2);
+            document.getElementById('result-newsroom-count').textContent = newsrooms;
+            document.getElementById('result-yearly-cost').textContent = '$' + yearlyEstimate.toFixed(2);
+
+            // Generate 12-month projection with growth
+            let growthProjectionHTML = '<table class="comparison-table"><thead><tr><th>Month</th><th>Newsrooms</th><th>Monthly Cost</th><th>Cumulative Cost</th></tr></thead><tbody>';
+            let cumulativeCost = 0;
+            let currentNewsrooms = newsrooms;
+
+            for (let month = 1; month <= 12; month++) {
+                const monthlyCost = totalPerNewsroom * currentNewsrooms;
+                cumulativeCost += monthlyCost;
+                
+                growthProjectionHTML += `<tr>
+                    <td>Month ${month}</td>
+                    <td>${Math.round(currentNewsrooms)}</td>
+                    <td>$${monthlyCost.toFixed(2)}</td>
+                    <td>$${cumulativeCost.toFixed(2)}</td>
+                </tr>`;
+                
+                currentNewsrooms = currentNewsrooms * (1 + growthRate / 100);
+            }
+            
+            growthProjectionHTML += '</tbody></table>';
+            document.getElementById('growthProjection').innerHTML = growthProjectionHTML;
+
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Initialize with default calculation
+        window.onload = function() {
+            calculateCosts();
+        };
+    </script>
+</body>
+</html>
